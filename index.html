@@ -6,15 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dodo Benchmark</title>
   <script type="module" src="script.js"></script>
+  <style>
+    h1,h2,h3,label {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    #inputs > div {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
 </head>
 
 <body>
     <div id="app"></div>
     <button id="button" style="display:none;" onclick="window.StartRender()">Start Render</button>
-    <h1 id="text" style="font-family: Arial, Helvetica, sans-serif;display:none;">Starting Render...</h1>
+    <h1 id="text" style="display:none;">Starting Render...</h1>
     <div id="audiolists" style="display: flex;flex-direction: column;"></div>
-    <h1 id="comparetext" style="font-family: Arial, Helvetica, sans-serif;display:none;">Starting Render...</h1>
+    <h1 id="comparetext" style="display:none;">Starting Render...</h1>
     <audio controls id="compare" style="display:none;"></audio>
+    <div id="inputs"><div><label>Performances per render (To render multiple performances simultaneously)</label><input type="number" value="1" min="1" max="9"></div><div><label>Inc/Dec dB from 50% Volume</label></div><div><label>Volume for Bass</label><input type="number" value="-10" min="-50" max="50"></div><div><label>Volume for Melody</label><input type="number" value="-3" min="-50" max="50"></div><div><label>Volume for CounterMelody</label><input type="number" value="-4" min="-50" max="50"></div><div><label>Volume for Drums</label><input type="number" value="-7" min="-50" max="50"></div><div><label>Volume for Signature</label><input type="number" value="-2.8" min="-50" max="50"></div><div><label>Volume for AuxPercussion</label><input type="number" value="-2.8" min="-50" max="50"></div>
+    </div>
 </body>
 
 </html>
