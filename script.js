@@ -25905,7 +25905,15 @@ function delay(ms) {
 window.Backing = null;
 window.Load = function() {
     document.getElementById("button").style.display = "block";
-    if (window.location.search == "?autostart=true") {
+    let s = window.location.search.substr(1).split("&");
+    let search = {};
+    for (let i = 0; i < s.length; i++) {
+        search[s[i].split("=")[0]] = s[i].split("=")[1];
+    }
+    if (search.song) {
+        document.getElementById("song").value = search.song
+    }
+    if (search.autostart == "true") {
         window.StartRender();
     }
 }
