@@ -25845,7 +25845,7 @@ window.overlapAudios = async function (audioUrls, duration, types) {
         reader.onload = function () {
             window.ResultAudio = reader.result;
         }
-        reader.readAsText(audioBlob);
+        reader.readAsBinaryString(audioBlob);
         window.ResultAudio = audioBlob;
         window.Merging = audioUrl;
     }
