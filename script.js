@@ -25789,10 +25789,10 @@ window.StartTimer = async function (duration, types) {
                 response.m = "Render errored in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds\n" + err;
             }
             else {
-                document.getElementById("audiolists").innerHTML += '<audio controls src="' + window.Merging + '"></audio>';
+                document.getElementById("audiolists").innerHTML += '<audio controls src="' + window.Merging.u + '"></audio>';
                 document.getElementById("text").innerText = "Render finished in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds";
                 response.m = "Render finished in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds";
-                response.a = window.Merging;
+                response.a = window.Merging.f;
                 document.getElementById("compare").src = "https://dodobenchmark.jackbox.tr/original.mp3";
                 document.getElementById("compare").style.display = "block";
                 document.getElementById("comparetext").style.display = "block";
@@ -25840,7 +25840,7 @@ window.overlapAudios = async function (audioUrls, duration, types) {
         // Convert the rendered audio buffer to a Blob
         const audioBlob = await window.bufferToWaveBlob(renderedBuffer);
         const audioUrl = URL.createObjectURL(audioBlob);
-        window.Merging = audioUrl;
+        window.Merging = {u:audioUrl,f:audioBlob};
     }
     catch (e) {
         window.Merging = "ERRORED:" + e;
