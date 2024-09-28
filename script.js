@@ -25841,6 +25841,7 @@ window.overlapAudios = async function (audioUrls, duration, types) {
         // Convert the rendered audio buffer to a Blob
         const audioBlob = await window.bufferToWaveBlob(renderedBuffer);
         const audioUrl = URL.createObjectURL(audioBlob);
+        window.ResultAudio = audioBlob;
         window.Merging = audioUrl;
     }
     catch (e) {
@@ -25904,6 +25905,7 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 window.Backing = null;
+window.ResultAudio = null;
 window.Load = function() {
     document.getElementById("button").style.display = "block";
     let s = window.location.search.substr(1).split("&");
@@ -25917,5 +25919,8 @@ window.Load = function() {
     if (search.autostart == "true") {
         window.StartRender();
     }
+}
+window.GetResult = function() {
+    return window.ResultAudio;
 }
 window.Load();
