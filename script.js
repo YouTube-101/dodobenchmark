@@ -25714,7 +25714,8 @@ window.StartRender = async function () {
         window.Renders.push(null);
         window.RenderThis(p, i);
     })
-    window.StartTimer(payload.duration, types);
+    const result = await window.StartTimer(payload.duration, types);
+    return result;
 }
 window.RenderThis = async function (payload, number) {
     const response = await window.render(payload);
@@ -25746,9 +25747,11 @@ window.StartTimer = async function (duration, types) {
         if (r.ok == 0) {
             errortext = "\n" + r.error;
         }
-    })
+    });
+    let response = { m: "" };
     if (errortext.length) {
-        document.getElementById("text").innerText = "Render errored in " + ((new Date().getTime() - StartTime) / 1000).toFixed(3) + " seconds" + errortext;
+        document.getElementById("text").innerText = "Render errored in " + ((new Date().getTime() - StartTime) / 1000).toFixed(3) + " seconds\n" + errortext;
+        response.m = "Render errored in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds\n" + errortext;
     }
     else {
         var blobs = [];
@@ -25783,7 +25786,6 @@ window.StartTimer = async function (duration, types) {
                 await delay(100);
             }
             const CurrentTime = new Date().getTime();
-            let response = { m: "" };
             if (window.Merging.startsWith("ERRORED:")) {
                 const err = window.Merging.substring(8);
                 document.getElementById("text").innerText = "Render errored in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds\n" + err;
@@ -25799,9 +25801,9 @@ window.StartTimer = async function (duration, types) {
                 document.getElementById("comparetext").style.display = "block";
                 document.getElementById("comparetext").innerText = "Original render for comparison:";
             }
-            console.log("RESPONSE:" + JSON.stringify(response))
         }
     }
+    return response;
 }
 window.overlapAudios = async function (audioUrls, duration, types) {
     try {
@@ -25845,7 +25847,7 @@ window.overlapAudios = async function (audioUrls, duration, types) {
         reader.onload = function () {
             window.ResultAudio = reader.result;
         }
-        reader.readAsBinaryString(audioBlob);
+        reader.readAsText(audioBlob);
         window.ResultAudio = audioBlob;
         window.Merging = audioUrl;
     }
