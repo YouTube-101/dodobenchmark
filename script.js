@@ -25796,7 +25796,11 @@ window.StartTimer = async function (duration, types) {
                 document.getElementById("text").innerText = "Render finished in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds";
                 response.m = "Render finished in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds";
                 response.a = window.Merging;
-                response.f = window.ResultAudio;
+                var reader = new FileReader();
+                reader.onload = function () {
+                    response.f = reader.result;
+                }
+                await reader.readAsDataURL(window.ResultAudio);
                 document.getElementById("compare").src = "https://dodobenchmark.jackbox.tr/original.mp3";
                 document.getElementById("compare").style.display = "block";
                 document.getElementById("comparetext").style.display = "block";
