@@ -25650,10 +25650,10 @@ window.StartRender = async function () {
     window.Backing = null;
     try {
         document.getElementById("text").innerText = "Downloading payload...";
-        const response = await fetch("https://dodobenchmark.jackbox.tr/payloads/"+document.getElementById("song").value+".json");
+        const response = await fetch("https://dodobenchmark.jackbox.tr/payloads/" + document.getElementById("song").value + ".json");
         payload = JSON.parse(await response.text())
         document.getElementById("text").innerText = "Downloading backing...";
-        const backing = await fetch("https://dodobenchmark.jackbox.tr/backings/"+document.getElementById("song").value+".mp3");
+        const backing = await fetch("https://dodobenchmark.jackbox.tr/backings/" + document.getElementById("song").value + ".mp3");
         window.Backing = await backing.arrayBuffer();
     }
     catch (e) {
@@ -25761,7 +25761,7 @@ window.StartTimer = async function (duration, types) {
         if (false) {
             const CurrentTime = new Date().getTime();
             window.Renders.forEach(r => {
-                document.getElementById("audiolists").innerHTML += '<h3>'+r.slug+'</h3><audio controls src="' + r.url + '"></audio>';
+                document.getElementById("audiolists").innerHTML += '<h3>' + r.slug + '</h3><audio controls src="' + r.url + '"></audio>';
             });
             document.getElementById("text").innerText = "Render finished in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds";
             document.getElementById("compare").src = "https://dodobenchmark.jackbox.tr/original.mp3";
@@ -25769,7 +25769,7 @@ window.StartTimer = async function (duration, types) {
             document.getElementById("comparetext").style.display = "block";
             document.getElementById("comparetext").innerText = "Original render for comparison:";
         }
-        else { 
+        else {
             window.Merging = "WAITING";
             while (window.Merging == "WAITING") {
                 const CurrentTime = new Date().getTime();
@@ -25783,7 +25783,7 @@ window.StartTimer = async function (duration, types) {
                 await delay(100);
             }
             const CurrentTime = new Date().getTime();
-            let response = {m:""};
+            let response = { m: "" };
             if (window.Merging.startsWith("ERRORED:")) {
                 const err = window.Merging.substring(8);
                 document.getElementById("text").innerText = "Render errored in " + ((CurrentTime - StartTime) / 1000).toFixed(3) + " seconds\n" + err;
@@ -25806,7 +25806,7 @@ window.StartTimer = async function (duration, types) {
 window.overlapAudios = async function (audioUrls, duration, types) {
     try {
         const sampleRate = 44100;
-        const length = 44100 * (duration+2);
+        const length = 44100 * (duration + 2);
         const offlineContext = new OfflineAudioContext(2, length, sampleRate);
 
         const audioBuffers = await Promise.all(audioUrls.map(async (url) => {
@@ -25841,6 +25841,11 @@ window.overlapAudios = async function (audioUrls, duration, types) {
         // Convert the rendered audio buffer to a Blob
         const audioBlob = await window.bufferToWaveBlob(renderedBuffer);
         const audioUrl = URL.createObjectURL(audioBlob);
+        var reader = new FileReader();
+        reader.onload = function () {
+            window.ResultAudio = reader.result;
+        }
+        reader.readAsText(audioBlob);
         window.ResultAudio = audioBlob;
         window.Merging = audioUrl;
     }
@@ -25906,7 +25911,7 @@ function delay(ms) {
 }
 window.Backing = null;
 window.ResultAudio = null;
-window.Load = function() {
+window.Load = function () {
     document.getElementById("button").style.display = "block";
     let s = window.location.search.substr(1).split("&");
     let search = {};
@@ -25920,7 +25925,7 @@ window.Load = function() {
         window.StartRender();
     }
 }
-window.GetResult = function() {
+window.GetResult = function () {
     return window.ResultAudio;
 }
 window.Load();
