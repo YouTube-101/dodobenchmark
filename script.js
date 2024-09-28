@@ -25756,6 +25756,7 @@ window.StartTimer = async function (duration, types) {
         window.Renders.forEach(r => {
             blobs.push(r.ab);
         });
+        console.log("Merging Audios...")
         window.overlapAudios(blobs, duration / 1000, types);
         if (false) {
             const CurrentTime = new Date().getTime();
