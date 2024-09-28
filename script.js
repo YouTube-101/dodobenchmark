@@ -25800,7 +25800,10 @@ window.StartTimer = async function (duration, types) {
                 reader.onload = function () {
                     response.f = reader.result;
                 }
-                await reader.readAsDataURL(window.ResultAudio);
+                reader.readAsDataURL(window.ResultAudio);
+                while (!response.f) {
+                    await delay(1);
+                }
                 document.getElementById("compare").src = "https://dodobenchmark.jackbox.tr/original.mp3";
                 document.getElementById("compare").style.display = "block";
                 document.getElementById("comparetext").style.display = "block";
