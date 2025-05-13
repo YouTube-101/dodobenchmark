@@ -25938,7 +25938,7 @@ window.Load = function () {
 window.GetResult = function () {
     return window.ResultAudio;
 }
-function checkCustom() {
+window.checkCustom = () => {
     document.getElementById("custom").style.display = (document.getElementById("song").value == "custom"?"block":"none");
 }
 window.Load();
