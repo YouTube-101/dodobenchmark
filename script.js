@@ -25837,7 +25837,7 @@ window.StartTimer = async function (duration, types) {
                 response.a = window.Merging;
                 var reader = new FileReader();
                 reader.onload = function () {
-                    response.f = reader.result;
+                    response.f = Buffer.from(reader.result);
                 }
                 reader.readAsArrayBuffer(window.ResultAudio);
                 while (!response.f) {
