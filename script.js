@@ -25667,7 +25667,7 @@ window.StartRender = async function () {
             }
             while (reading) await delay(10);
             document.getElementById("text").innerText = "Processing payload...";
-            const response = document.getElementById("backingupload").files[0];
+            const response = document.getElementById("payloadupload").files[0];
             if (response) {
                 reading = true;
                 const reader = new FileReader();
