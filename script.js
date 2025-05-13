@@ -25839,7 +25839,7 @@ window.StartTimer = async function (duration, types) {
                 reader.onload = function () {
                     response.f = reader.result;
                 }
-                reader.readAsDataURL(window.ResultAudio);
+                reader.readAsArrayBuffer(window.Merging);
                 while (!response.f) {
                     await delay(1);
                 }
