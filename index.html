@@ -20,9 +20,24 @@
 <body>
     <div id="app"></div>
     <label>Song to render:</label>
-    <select id="song">
+    <select id="song" onchange="checkCustom()">
       <option value="dodo-re-mi">Dodo Re Mi</option>
+      <option value="custom">Upload your own</option>
     </select>
+    <div id="custom" style="display: none;">
+        <div>
+            <label>Upload your backing here: </label>
+            <input id="backingupload" type="file" accept="audio/ogg">
+        </div>
+        <div>
+            <label>Upload your payload here: </label>
+            <input id="payloadupload" type="file" accept="text/json">
+        </div>
+        <div>
+            <label>Or paste your payload here: </label>
+            <textarea id="payloadtext" type="text" rows="10" cols="50"></textarea>
+        </div>
+    </div>
     <button id="button" style="display:none;" onclick="window.StartRender()">Start Render</button>
     <h1 id="text" style="display:none;">Starting Render...</h1>
     <div id="audiolists" style="display: flex;flex-direction: column;"></div>
