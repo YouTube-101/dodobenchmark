@@ -25682,7 +25682,7 @@ window.StartRender = async function () {
                 reader.readAsText(response);
             }
             else {
-                payload = document.getElementById("payloadtext");
+                payload = JSON.parse(document.getElementById("payloadtext").value);
             }
             while (reading) await delay(10);
         }
