@@ -25650,6 +25650,7 @@ window.StartRender = async function () {
     window.Backing = null;
     try {
         if (document.getElementById("song").value == "custom") {
+            document.getElementById("custom").style.display = "none";
             document.getElementById("text").innerText = "Processing backing...";
             let reading = false;
             const backing = document.getElementById("backingupload").files[0];
