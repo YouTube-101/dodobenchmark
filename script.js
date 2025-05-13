@@ -25839,7 +25839,7 @@ window.StartTimer = async function (duration, types) {
                 reader.onload = function () {
                     response.f = reader.result;
                 }
-                reader.readAsArrayBuffer(window.Merging);
+                reader.readAsArrayBuffer(window.ResultAudio);
                 while (!response.f) {
                     await delay(1);
                 }
@@ -25890,11 +25890,6 @@ window.overlapAudios = async function (audioUrls, duration, types) {
         // Convert the rendered audio buffer to a Blob
         const audioBlob = await window.bufferToWaveBlob(renderedBuffer);
         const audioUrl = URL.createObjectURL(audioBlob);
-        var reader = new FileReader();
-        reader.onload = function () {
-            window.ResultAudio = reader.result;
-        }
-        reader.readAsText(audioBlob);
         window.ResultAudio = audioBlob;
         window.Merging = audioUrl;
     }
