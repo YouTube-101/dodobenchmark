@@ -25649,12 +25649,50 @@ window.StartRender = async function () {
     let payload = null;
     window.Backing = null;
     try {
-        document.getElementById("text").innerText = "Downloading payload...";
-        const response = await fetch("https://dodobenchmark.jackbox.tr/payloads/" + document.getElementById("song").value + ".json");
-        payload = JSON.parse(await response.text())
-        document.getElementById("text").innerText = "Downloading backing...";
-        const backing = await fetch("https://dodobenchmark.jackbox.tr/backings/" + document.getElementById("song").value + ".mp3");
-        window.Backing = await backing.arrayBuffer();
+        if (document.getElementById("song").value == "custom") {
+            document.getElementById("text").innerText = "Processing backing...";
+            let reading = false;
+            const backing = document.getElementById("backingupload").files[0];
+            if (backing) {
+                reading = true;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    window.Backing = e.target.result;
+                    reading = false;
+                }
+                reader.onerror = function(e) {
+                    reading = false;
+                }
+                reader.readAsArrayBuffer(backing);
+            }
+            while (reading) await delay(10);
+            document.getElementById("text").innerText = "Processing payload...";
+            const response = document.getElementById("backingupload").files[0];
+            if (response) {
+                reading = true;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    payload = JSON.parse(e.target.result);
+                    reading = false;
+                }
+                reader.onerror = function(e) {
+                    reading = false;
+                }
+                reader.readAsText(response);
+            }
+            else {
+                payload = document.getElementById("payloadtext");
+            }
+            while (reading) await delay(10);
+        }
+        else {
+            document.getElementById("text").innerText = "Downloading payload...";
+            const response = await fetch("https://dodobenchmark.jackbox.tr/payloads/" + document.getElementById("song").value + ".json");
+            payload = JSON.parse(await response.text())
+            document.getElementById("text").innerText = "Downloading backing...";
+            const backing = await fetch("https://dodobenchmark.jackbox.tr/backings/" + document.getElementById("song").value + ".mp3");
+            window.Backing = await backing.arrayBuffer();
+        }
     }
     catch (e) {
         document.getElementById("text").innerText = "Render errored in 0 seconds\n" + e;
